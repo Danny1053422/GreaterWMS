@@ -17,12 +17,15 @@
           style="width:300px;height:200px"
           :url="goodslistfile_pathname"
           method="post"
+          auto-upload
           :headers="[{ name: 'token', value: token }, { name: 'language', value: lang }, { name: 'operator', value: login_id }]"
           :field-name="file => 'file'"
           :label="$t('upload_center.uploadgoodslistfile')"
           accept=".xlsx,csv,xls/*"
           @rejected="onRejected"
           @added="getfileinfo"
+          @uploaded="uploadSuccess"
+          @failed="uploadFail"
         />
       </div>
       <div class="q-pa-md q-gutter-md row items-start">
@@ -30,12 +33,15 @@
           style="width:300px;height:200px"
           :url="customerfile_pathname"
           method="post"
+          auto-upload
           :headers="[{ name: 'token', value: token }, { name: 'language', value: lang }, { name: 'operator', value: login_id }]"
           :field-name="file => 'file'"
           :label="$t('upload_center.uploadcustomerfile')"
           accept=".xlsx,csv,xls/*"
           @rejected="onRejected"
           @added="getfileinfo"
+          @uploaded="uploadSuccess"
+          @failed="uploadFail"
         />
       </div>
       <div class="q-pt-md q-gutter-md row items-start">
@@ -43,12 +49,15 @@
           style="width:300px;height:200px"
           :url="supplierfile_pathname"
           method="post"
+          auto-upload
           :headers="[{ name: 'token', value: token }, { name: 'language', value: lang }, { name: 'operator', value: login_id }]"
           :field-name="file => 'file'"
           :label="$t('upload_center.uploadsupplierfile')"
           accept=".xlsx,csv,xls/*"
           @rejected="onRejected"
           @added="getfileinfo"
+          @uploaded="uploadSuccess"
+          @failed="uploadFail"
         />
       </div>
     </div>
@@ -59,6 +68,7 @@
 <script>
 import { baseurl } from 'boot/axios_request';
 import { LocalStorage, openURL } from 'quasar';
+import * as XLSX from 'components/xlsx.full.min.js';
 export default {
   name: 'Pageinitupload',
   data() {
@@ -84,10 +94,22 @@ export default {
         message: `${rejectedEntries.length} file(s) did not pass validation constraints`
       });
     },
+    readWorkbookFromLocalFile(file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const workbook = XLSX.read(e.target.result, { type: 'binary' });
+        console.log(workbook);
+      };
+      reader.readAsBinaryString(file);
+    },
     getfileinfo(file) {
-      var _this = this
-      _this.readWorkbookFromLocalFile(file)
-      console.log(file);
+      this.readWorkbookFromLocalFile(file)
+    },
+    uploadSuccess() {
+      this.$q.notify({ type: 'positive', message: 'Upload succeeded' })
+    },
+    uploadFail() {
+      this.$q.notify({ type: 'negative', message: 'Upload failed' })
     },
     electronOpenLink (url) {
       const { shell } = require('electron')
