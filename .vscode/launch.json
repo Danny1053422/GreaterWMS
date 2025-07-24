@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Daphne",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/venv311/Scripts/daphne.exe",
+      "args": [
+        "-b", "0.0.0.0",
+        "-p", "8008",
+        "greaterwms.asgi:application"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}
