@@ -112,8 +112,9 @@ export default {
       this.$q.notify({ type: 'negative', message: 'Upload failed' })
     },
     electronOpenLink (url) {
-      const { shell } = require('electron')
-      shell.openExternal(url)
+      // const { shell } = require('electron')
+      // shell.openURL(url)
+      openURL(url);
     },
     downloadgoodstemplate() {
       var _this = this;
