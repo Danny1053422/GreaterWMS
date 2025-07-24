@@ -12,3 +12,6 @@ bfg.jar
 error.log
 server.log
 /.history/
+templates/dist/
+
+venv311/
