@@ -13,7 +13,7 @@ function getBaseUrl (name) {
   return xhr.status === okStatus ? xhr.responseText : null
 }
 
-const baseurl = getBaseUrl('baseurl.txt')
+const baseurl = window.location.origin + '/'
 
 const axiosInstance = axios.create({
   baseURL: baseurl,

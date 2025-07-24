@@ -85,14 +85,14 @@ export default {
       });
     },
     getfileinfo(file) {
-      // var _this = this
-      // _this.readWorkbookFromLocalFile(file)
+      var _this = this
+      _this.readWorkbookFromLocalFile(file)
       console.log(file);
     },
-    // electronOpenLink (url) {
-    //   const { shell } = require('electron')
-    //   shell.openExternal(url)
-    // },
+    electronOpenLink (url) {
+      const { shell } = require('electron')
+      shell.openExternal(url)
+    },
     downloadgoodstemplate() {
       var _this = this;
       if (LocalStorage.has('auth')) {
