@@ -80,7 +80,7 @@ export default {
       capitalfile_pathname: baseurl + '/uploadfile/capitalfile/',
       customerfile_pathname: baseurl + '/uploadfile/customerfile/',
       freightfile_pathname: baseurl + '/uploadfile/freightfile/',
-      goodslistfile_pathname: baseurl + 'uploadfile/goodslistfile/',
+      goodslistfile_pathname: baseurl + '/uploadfile/goodslistfile/',
       supplierfile_pathname: baseurl + '/uploadfile/supplierfile/'
     };
   },
