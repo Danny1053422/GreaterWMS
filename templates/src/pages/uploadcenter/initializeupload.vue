@@ -80,7 +80,7 @@ export default {
       capitalfile_pathname: baseurl + '/uploadfile/capitalfile/',
       customerfile_pathname: baseurl + '/uploadfile/customerfile/',
       freightfile_pathname: baseurl + '/uploadfile/freightfile/',
-      goodslistfile_pathname: baseurl + '/uploadfile/goodslistfile/',
+      goodslistfile_pathname: baseurl + 'uploadfile/goodslistfile/',
       supplierfile_pathname: baseurl + '/uploadfile/supplierfile/'
     };
   },
@@ -102,8 +102,10 @@ export default {
       };
       reader.readAsBinaryString(file);
     },
-    getfileinfo(file) {
-      this.readWorkbookFromLocalFile(file)
+    getfileinfo (files) {
+      if (Array.isArray(files) && files.length > 0) {
+        this.readWorkbookFromLocalFile(files[0])
+      }
     },
     uploadSuccess() {
       this.$q.notify({ type: 'positive', message: 'Upload succeeded' })
