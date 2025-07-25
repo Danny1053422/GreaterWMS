@@ -53,6 +53,7 @@ axiosInstanceAuth.interceptors.request.use(
       config.headers.put['Content-Type'] = 'application/json, charset="utf-8"'
       config.headers.token = LocalStorage.getItem('openid')
       config.headers.operator = LocalStorage.getItem('login_id')
+      config.headers.warehouse_id = LocalStorage.getItem('warehouse_id')
       config.headers.language = lang
       if (config.method === 'post' || config.method === 'patch' || config.method === 'put' || config.method === 'delete') {
         Loading.show()
@@ -200,6 +201,7 @@ axiosInstanceAuthScan.interceptors.request.use(
       config.headers.put['Content-Type'] = 'application/json, charset="utf-8"'
       config.headers.token = LocalStorage.getItem('openid')
       config.headers.operator = LocalStorage.getItem('login_id')
+      config.headers.warehouse_id = LocalStorage.getItem('warehouse_id')
       config.headers.language = lang
       if (config.method === 'post' || config.method === 'patch' || config.method === 'put' || config.method === 'delete') {
         Loading.show()
@@ -331,6 +333,7 @@ axiosInstance.interceptors.request.use(
   function (config) {
     config.headers.post['Content-Type'] = 'application/json, charset="utf-8"'
     config.headers.language = lang
+    config.headers.warehouse_id = LocalStorage.getItem('warehouse_id')
     if (config.method === 'post' || config.method === 'patch' || config.method === 'put' || config.method === 'delete') {
         Loading.show()
       }
@@ -444,6 +447,7 @@ axiosInstanceVersion.interceptors.request.use(
       if (config.method === 'post' || config.method === 'patch' || config.method === 'put' || config.method === 'delete') {
         Loading.show()
       }
+      config.headers.warehouse_id = LocalStorage.getItem('warehouse_id')
       return config
     } else {
       Loading.hide()

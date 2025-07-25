@@ -743,6 +743,7 @@ export default {
       lang: this.$i18n.locale,
       container_height: this.$q.screen.height + '' + 'px',
       warehouse_name: '',
+      warehouse_id: '',
       warehouseOptions: [],
       langOptions: [
         { value: 'en-US', label: 'English' },
@@ -1011,16 +1012,27 @@ export default {
         .then((res) => {
           if (res.count === 1) {
             _this.openid = res.results[0].openid
+            _this.warehouse_id = res.results[0].id
             _this.warehouse_name = res.results[0].warehouse_name
+            LocalStorage.set('warehouse_id', _this.warehouse_id)
             LocalStorage.set('openid', _this.openid)
           } else {
             _this.warehouseOptions = res.results
-            if (LocalStorage.has('openid')) {
+            if (LocalStorage.has('warehouse_id')) {
+              _this.warehouse_id = LocalStorage.getItem('warehouse_id')
               _this.warehouseOptions.forEach((item, index) => {
-                if (item.openid === LocalStorage.getItem('openid')) {
+                if (item.id == _this.warehouse_id) {
                   _this.warehouse_name = item.warehouse_name
                 }
               })
+            } else if (LocalStorage.has('openid')) {
+              _this.warehouseOptions.forEach((item, index) => {
+                if (item.openid === LocalStorage.getItem('openid')) {
+                  _this.warehouse_name = item.warehouse_name
+                  _this.warehouse_id = item.id
+                }
+              })
+              LocalStorage.set('warehouse_id', _this.warehouse_id)
             }
           }
         })
@@ -1036,15 +1048,8 @@ export default {
     warehouseChange (e) {
       var _this = this
       _this.warehouse_name = _this.warehouseOptions[e].warehouse_name
-      _this.openid = _this.warehouseOptions[e].openid
-      LocalStorage.set('openid', _this.openid)
-      LocalStorage.set('staff_type', 'Admin')
-      _this.login_name = ''
-      LocalStorage.set('login_name', '')
-      _this.authin = '0'
-      _this.isLoggedIn()
-      LocalStorage.remove('auth')
-      SessionStorage.remove('axios_check')
+      _this.warehouse_id = _this.warehouseOptions[e].id
+      LocalStorage.set('warehouse_id', _this.warehouse_id)
     },
     langChange (e) {
       var _this = this
@@ -1069,6 +1074,9 @@ export default {
     } else {
       _this.openid = ''
       LocalStorage.set('openid', '')
+    }
+    if (LocalStorage.has('warehouse_id')) {
+      _this.warehouse_id = LocalStorage.getItem('warehouse_id')
     }
     if (LocalStorage.has('login_name')) {
       _this.login_name = LocalStorage.getItem('login_name')
