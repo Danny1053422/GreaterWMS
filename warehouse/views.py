@@ -72,8 +72,8 @@ class APIViewSet(viewsets.ModelViewSet):
                                     is_delete=False).exists():
             raise APIException({"detail": "Data Exists"})
         else:
-            if ListModel.objects.filter(openid=data['openid'], is_delete=False).count() >= 5:
-                raise APIException({"detail": "You Just Can Add 5 Warehouse"})
+            if ListModel.objects.filter(openid=data['openid'], is_delete=False).count() >= 1:
+                raise APIException({"detail": "You Just Can Add 1 Warehouse"})
             else:
                 serializer = self.get_serializer(data=data)
                 serializer.is_valid(raise_exception=True)
